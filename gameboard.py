@@ -1,29 +1,69 @@
+import numpy
+import os
+from player import Player
+
 # set ANSI codes for X player as red
 RED_TEXT = "\033[91m"
 RED_BG = "\033[41m"
 # set ANSI codes for O player as blue
 BLUE_TEXT = "\033[94m"
 BLUE_BG = "\033[44m"
+# set ANSI code for the numbers
+DARK_GREY_TEXT = "\033[40;90m"
 # set ANSI code to reset colors
 RESET = "\033[0m"
 
 
-class GameBoard:
-    def __init__(self, test):
-        board_array = test.board_array
-        self.game_board = (f"{board_array[0][0]} | {board_array[0][1]} | {board_array[0][2]}\n"
-                           f"---------\n"
-                           f"{board_array[1][0]} | {board_array[1][1]} | {board_array[1][2]}\n"
-                           f"---------\n"
-                           f"{board_array[2][0]} | {board_array[2][1]} | {board_array[2][2]}\n")
+def set_color(val: numpy.ndarray[str]) -> str:
+    """
+    Take the string value from an array and change the color depending on the value.
+    :param val: (ndarray[str]): The string value from an array to check
+    :return: Colored string
+    """
+    if val == 'X':
+        return f"{RED_TEXT}{val}{RESET}"
+    elif val == 'O':
+        return f"{BLUE_TEXT}{val}{RESET}"
+    else:
+        return f"{DARK_GREY_TEXT}{val}{RESET}"
 
-    def update_board(self, test):
-        board_array = test.board_array
-        self.game_board = (f"{board_array[0][0]} | {board_array[0][1]} | {board_array[0][2]}\n"
-                           f"---------\n"
-                           f"{board_array[1][0]} | {board_array[1][1]} | {board_array[1][2]}\n"
-                           f"---------\n"
-                           f"{board_array[2][0]} | {board_array[2][1]} | {board_array[2][2]}\n")
 
-    def print_board(self):
-        print(self.game_board)
+def set_input_numbers(current_board: numpy.ndarray) -> numpy.ndarray:
+    updated_board = current_board
+    input_values = numpy.array([['1', '2', '3'],
+                                ['4', '5', '6'],
+                                ['7', '8', '9']])
+    for x in range(len(updated_board)):
+        for y in range(len(updated_board[x])):
+            if updated_board[x][y] == ' ':
+                updated_board[x][y] = input_values[x][y]
+    return updated_board
+
+
+def format_board(current_board: numpy.ndarray, player1: Player, player2: Player) -> str:
+    current_board = set_input_numbers(current_board)
+    board_string = (
+        f"{set_color(current_board[0][0])} | {set_color(current_board[0][1])} | {set_color(current_board[0][2])}"
+        f"     {RED_TEXT}{player1.name}{RESET}\n"
+        f"---------     Score: {player1.score}\n"
+        f"{set_color(current_board[1][0])} | {set_color(current_board[1][1])} | {set_color(current_board[1][2])}\n"
+        f"---------     {BLUE_TEXT}{player2.name}{RESET}\n"
+        f"{set_color(current_board[2][0])} | {set_color(current_board[2][1])} | {set_color(current_board[2][2])}"
+        f"     Score: {player2.score}\n")
+    return board_string
+
+
+def clear_console():
+    """
+    Clear the output on the run console
+    :return: None
+    """
+    if os.name == 'posix':
+        os.system('clear')  # For macOS and Linux
+    elif os.name == 'nt':
+        os.system('cls')  # For Windows
+
+
+def print_board(current_board: numpy.ndarray, player1: Player, player2: Player):
+    clear_console()
+    print(f"{format_board(current_board, player1, player2)}")

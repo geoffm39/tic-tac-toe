@@ -1,41 +1,21 @@
+from gameboard import print_board
+from board import Board
+from player import Player
+
 import numpy
-from gameboard import GameBoard
 
-board_array = numpy.array([[' ', ' ', ' '],
-                           [' ', ' ', ' '],
-                           [' ', ' ', ' ']])
+board = Board()
 
-# board = GameBoard(board_array)
-#
-# board.print_board()
-#
-# board_array[0][0] = 'X'
-#
-# board.update_board(board_array)
-# board.print_board()
+board_array = numpy.array([['X', ' ', ' '],
+                           [' ', 'O', ' '],
+                           [' ', ' ', 'X']])
 
+print(board_array)
 
-class Test:
-    def __init__(self):
-        self.board_array = numpy.array([[' ', ' ', ' '],
-                                        [' ', ' ', ' '],
-                                        [' ', ' ', ' ']])
+player1 = Player('geoff')
+player2 = Player('Bob')
 
-    def set_pos(self, row, col, val):
-        self.board_array[row][col] = val
+print_board(board_array, player1, player2)
 
 
-bob = Test()
 
-# print(bob.board_array)
-#
-# bob.set_pos(0, 0, 'X')
-# print(bob.board_array)
-
-board = GameBoard(bob)
-board.print_board()
-
-bob.set_pos(0, 0, 'X')
-
-board.update_board(bob)
-board.print_board()
