@@ -18,7 +18,7 @@ def set_color(val: numpy.ndarray[str]) -> str:
     """
     Take the string value from an array and change the color depending on the value.
     :param val: (ndarray[str]): The string value from an array to check
-    :return: Colored string
+    :return: (str) Colored string
     """
     if val == 'X':
         return f"{RED_TEXT}{val}{RESET}"
@@ -29,6 +29,11 @@ def set_color(val: numpy.ndarray[str]) -> str:
 
 
 def set_input_numbers(current_board: numpy.ndarray) -> numpy.ndarray:
+    """
+    Take the current game board array and set the blank values to the input values for the player input.
+    :param current_board: (ndarray): The current board array to set the input numbers to
+    :return: (ndarray): The array with the input values inserted
+    """
     updated_board = current_board
     input_values = numpy.array([['1', '2', '3'],
                                 ['4', '5', '6'],
@@ -41,6 +46,14 @@ def set_input_numbers(current_board: numpy.ndarray) -> numpy.ndarray:
 
 
 def format_board(current_board: numpy.ndarray, player1: Player, player2: Player) -> str:
+    """
+    Takes the current game board array, and both player objects to return a
+    formatted string to be used as the gameboard output.
+    :param current_board: (ndarray): The current board array to use for creating the string
+    :param player1: (Player): Player object to set to player X
+    :param player2: (Player): Player object to set to player O
+    :return: (str): Formatted gameboard string
+    """
     current_board = set_input_numbers(current_board)
     board_string = (
         f"{set_color(current_board[0][0])} | {set_color(current_board[0][1])} | {set_color(current_board[0][2])}"
