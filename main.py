@@ -6,6 +6,8 @@ import numpy
 
 board = Board()
 
+
+# CODE FOR TESTING DURING PRODUCTION
 board_array = numpy.array([['X', ' ', ' '],
                            [' ', 'O', ' '],
                            [' ', ' ', 'X']])
@@ -16,6 +18,3 @@ player1 = Player('geoff')
 player2 = Player('Bob')
 
 print_board(board_array, player1, player2)
-
-
-
