@@ -3,9 +3,9 @@ import numpy
 
 class Board:
     def __init__(self):
-        self.board_array = numpy.array([[' ', ' ', ' '],
-                                        [' ', ' ', ' '],
-                                        [' ', ' ', ' ']])
+        self.array = numpy.array([[' ', ' ', ' '],
+                                  [' ', ' ', ' '],
+                                  [' ', ' ', ' ']])
 
     def set_position(self, row, col, val):
-        self.board_array[row][col] = val
+        self.array[row][col] = val

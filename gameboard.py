@@ -1,6 +1,6 @@
 import numpy
-import os
 from player import Player
+from util import clear_console
 
 # set ANSI codes for X player as red
 RED_TEXT = "\033[91m"
@@ -64,17 +64,6 @@ def format_board(current_board: numpy.ndarray, player1: Player, player2: Player)
         f"{set_color(current_board[2][0])} | {set_color(current_board[2][1])} | {set_color(current_board[2][2])}"
         f"     Score: {player2.score}\n")
     return board_string
-
-
-def clear_console():
-    """
-    Clear the output on the run console
-    :return: None
-    """
-    if os.name == 'posix':
-        os.system('clear')  # For macOS and Linux
-    elif os.name == 'nt':
-        os.system('cls')  # For Windows
 
 
 def print_board(current_board: numpy.ndarray, player1: Player, player2: Player):
