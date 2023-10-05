@@ -31,4 +31,5 @@ while continue_playing:
     while not winner:
         print_board(board.array, player1, player2)
         print(f"Player {current_player}, it's your move!")
+        print(type(board.check_position("5")))
         choice = input("Pick an available number: ")
