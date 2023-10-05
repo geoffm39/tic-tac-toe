@@ -1,11 +1,12 @@
 import numpy
 from typing import Union
 
+
 class Board:
     def __init__(self):
-        self.array = numpy.array([[' ', ' ', ' '],
-                                  [' ', ' ', ' '],
-                                  [' ', ' ', ' ']])
+        self.array = numpy.array([['1', '2', '3'],
+                                  ['4', '5', '6'],
+                                  ['7', '8', '9']])
 
     def get_position(self, position_num: str) -> Union[tuple, None]:
         row, col = numpy.where(self.array == position_num)

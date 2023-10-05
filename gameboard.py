@@ -28,23 +28,6 @@ def set_color(val: numpy.ndarray[str]) -> str:
         return f"{DARK_GREY_TEXT}{val}{RESET}"
 
 
-def set_input_numbers(current_board: numpy.ndarray) -> numpy.ndarray:
-    """
-    Take the current game board array and set the blank values to the input values for the player input.
-    :param current_board: (ndarray): The current board array to set the input numbers to
-    :return: (ndarray): The array with the input values inserted
-    """
-    updated_board = current_board
-    input_values = numpy.array([['1', '2', '3'],
-                                ['4', '5', '6'],
-                                ['7', '8', '9']])
-    for x in range(len(updated_board)):
-        for y in range(len(updated_board[x])):
-            if updated_board[x][y] == ' ':
-                updated_board[x][y] = input_values[x][y]
-    return updated_board
-
-
 def format_board(current_board: numpy.ndarray, player1: Player, player2: Player) -> str:
     """
     Takes the current game board array, and both player objects to return a
@@ -54,7 +37,6 @@ def format_board(current_board: numpy.ndarray, player1: Player, player2: Player)
     :param player2: (Player): Player object to set to player O
     :return: (str): Formatted gameboard string
     """
-    current_board = set_input_numbers(current_board)
     board_string = (
         f"{set_color(current_board[0][0])} | {set_color(current_board[0][1])} | {set_color(current_board[0][2])}"
         f"     {RED_TEXT}{player1.name}{RESET}\n"
@@ -69,3 +51,20 @@ def format_board(current_board: numpy.ndarray, player1: Player, player2: Player)
 def print_board(current_board: numpy.ndarray, player1: Player, player2: Player):
     clear_console()
     print(f"{format_board(current_board, player1, player2)}")
+
+# todo should i use this function instead as a clear_input_numbers() for when game is over??
+# def set_input_numbers(current_board: numpy.ndarray) -> numpy.ndarray:
+#     """
+#     Take the current game board array and set the blank values to the input values for the player input.
+#     :param current_board: (ndarray): The current board array to set the input numbers to
+#     :return: (ndarray): The array with the input values inserted
+#     """
+#     updated_board = current_board
+#     input_values = numpy.array([['1', '2', '3'],
+#                                 ['4', '5', '6'],
+#                                 ['7', '8', '9']])
+#     for x in range(len(updated_board)):
+#         for y in range(len(updated_board[x])):
+#             if updated_board[x][y] == ' ':
+#                 updated_board[x][y] = input_values[x][y]
+#     return updated_board
