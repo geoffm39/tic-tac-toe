@@ -1,4 +1,3 @@
-import numpy
 import random
 
 from art import logo

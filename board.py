@@ -1,15 +1,15 @@
-import numpy
+import numpy as np
 from typing import Union
 
 
 class Board:
     def __init__(self):
-        self.array = numpy.array([['1', '2', '3'],
-                                  ['4', '5', '6'],
-                                  ['7', '8', '9']])
+        self.array = np.array([['1', '2', '3'],
+                               ['4', '5', '6'],
+                               ['7', '8', '9']])
 
     def get_position(self, position_num: str) -> Union[tuple, None]:
-        row, col = numpy.where(self.array == position_num)
+        row, col = np.where(self.array == position_num)
         if len(row) > 0:
             return row[0], col[0]
         else:
@@ -27,3 +27,16 @@ class Board:
             self.array[row][col] = 'X'
         else:
             self.array[row][col] = 'O'
+
+    # def is_winner(self):
+
+    def get_winning_positions(self) -> Union[list, None]:
+        for i in range(len(self.array)):
+            if np.all(self.array[i, :] == self.array[i, 0]):
+                return [(i, 0), (i, 1), (i, 2)]
+            if np.all(self.array[:, i] == self.array[0, i]):
+                return [(0, i), (1, i), (2, i)]
+        if self.array[0][0] == self.array[1][1] and self.array[1][1] == self.array[2][2]:
+            return [(0, 0), (1, 1), (2, 2)]
+        if self.array[2, 0] == self.array[1][1] and self.array[1][1] == self.array[0, 2]:
+            return [(2, 0), (1, 1), (0, 2)]
