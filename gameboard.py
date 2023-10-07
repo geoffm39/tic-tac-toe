@@ -2,6 +2,8 @@ import numpy as np
 from player import Player
 from util import clear_console
 
+# set ANSI code for white text
+WHITE_TEXT = "\033[97m"
 # set ANSI codes for X player as red
 RED_TEXT = "\033[91m"
 RED_BG = "\033[41m"
@@ -14,58 +16,64 @@ DARK_GREY_TEXT = "\033[40;90m"
 RESET = "\033[0m"
 
 # todo: add parameter boolean to state if winning position
-def set_color(val: np.ndarray[str]) -> str:
+def set_color(current_board, winning_positions: list = None):
     """
     Take the string value from an array and change the color depending on the value.
     :param val: (ndarray[str]): The string value from an array to check
     :return: (str) Colored string
     """
-    if val == 'X':
-        return f"{RED_TEXT}{val}{RESET}"
-    elif val == 'O':
-        return f"{BLUE_TEXT}{val}{RESET}"
-    else:
-        return f"{DARK_GREY_TEXT}{val}{RESET}"
+    current_board = current_board
+    for x in range(len(current_board)):
+        for y in range(len(current_board[x])):
+            if winning_positions:
+                for position in winning_positions:
+                    if (x, y) == position:
+                        if current_board[x][y] == 'X':
+                            current_board[x][y] = f"{RED_BG}{WHITE_TEXT}{current_board[x][y]}{RESET}"
+
+                        else:
+                            current_board[x][y] = f"{BLUE_BG}{WHITE_TEXT}{current_board[x][y]}{RESET}"
+                    else:
+                        if current_board[x][y] == 'X':
+                            current_board[x][y] = f"{RED_TEXT}{current_board[x][y]}{RESET}"
+                        elif current_board[x][y] == 'O':
+                            current_board[x][y] = f"{BLUE_TEXT}{current_board[x][y]}{RESET}"
+                        else:
+                            current_board[x][y] = f"{DARK_GREY_TEXT}{current_board[x][y]}{RESET}"
+            else:
+                if current_board[x][y] == 'X':
+                    current_board[x][y] = f"{RED_TEXT}{current_board[x][y]}{RESET}"
+                elif current_board[x][y] == 'O':
+                    current_board[x][y] = f"{BLUE_TEXT}{current_board[x][y]}{RESET}"
+                else:
+                    current_board[x][y] = f"{DARK_GREY_TEXT}{current_board[x][y]}{RESET}"
+    return current_board
 
 
 # todo: chould i add a paramater 'winner' with a default value of None? if has value (list of indices) use to format
-def format_board(current_board: np.ndarray, player1: Player, player2: Player) -> str:
+def format_board(current_board: np.ndarray, player1: Player, player2: Player, winning_positions: list = None) -> str:
     """
     Takes the current game board array, and both player objects to return a
     formatted string to be used as the gameboard output.
     :param current_board: (ndarray): The current board array to use for creating the string
     :param player1: (Player): Player object to set to player X
     :param player2: (Player): Player object to set to player O
+    :param winning_positions: (list): List of tuples representing the winning positions on the array
     :return: (str): Formatted gameboard string
     """
+    board_copy = np.copy(current_board)
+    board_copy = set_color(board_copy, winning_positions)
     board_string = (
-        f"{set_color(current_board[0][0])} | {set_color(current_board[0][1])} | {set_color(current_board[0][2])}"
+        f"{board_copy[0][0]} | {board_copy[0][1]} | {board_copy[0][2]}"
         f"     {RED_TEXT}{player1.name}{RESET}\n"
         f"---------     Score: {player1.score}\n"
-        f"{set_color(current_board[1][0])} | {set_color(current_board[1][1])} | {set_color(current_board[1][2])}\n"
+        f"{board_copy[1][0]} | {board_copy[1][1]} | {board_copy[1][2]}\n"
         f"---------     {BLUE_TEXT}{player2.name}{RESET}\n"
-        f"{set_color(current_board[2][0])} | {set_color(current_board[2][1])} | {set_color(current_board[2][2])}"
+        f"{board_copy[2][0]} | {board_copy[2][1]} | {board_copy[2][2]}"
         f"     Score: {player2.score}\n")
     return board_string
 
 
-def print_board(current_board: np.ndarray, player1: Player, player2: Player):
-    clear_console()
-    print(f"{format_board(current_board, player1, player2)}")
-
-# todo should i use this function instead as a clear_input_numbers() for when game is over??
-# def set_input_numbers(current_board: np.ndarray) -> np.ndarray:
-#     """
-#     Take the current game board array and set the blank values to the input values for the player input.
-#     :param current_board: (ndarray): The current board array to set the input numbers to
-#     :return: (ndarray): The array with the input values inserted
-#     """
-#     updated_board = current_board
-#     input_values = np.array([['1', '2', '3'],
-#                                 ['4', '5', '6'],
-#                                 ['7', '8', '9']])
-#     for x in range(len(updated_board)):
-#         for y in range(len(updated_board[x])):
-#             if updated_board[x][y] == ' ':
-#                 updated_board[x][y] = input_values[x][y]
-#     return updated_board
+def print_board(current_board: np.ndarray, player1: Player, player2: Player, winning_positions=None):
+    # clear_console()
+    print(f"{format_board(current_board, player1, player2, winning_positions)}")

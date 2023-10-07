@@ -35,13 +35,15 @@ while continue_playing:
         while making_choice:
             if board.is_position(choice):
                 board.set_position(choice, current_player)
-                # todo: need conditional function here checking if game over or draw
-                print_board(board.array, player1, player2)
-                if current_player == 1:
-                    current_player = 2
+                if winning_positions := board.get_winning_positions():
+                    print_board(board.array, player1, player2, winning_positions)
                 else:
-                    current_player = 1
-                making_choice = False
+                    print_board(board.array, player1, player2)
+                    if current_player == 1:
+                        current_player = 2
+                    else:
+                        current_player = 1
+                    making_choice = False
             else:
                 print_board(board.array, player1, player2)
                 print(f"Player {current_player}, that is not a valid move!")
