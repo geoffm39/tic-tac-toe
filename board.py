@@ -41,3 +41,7 @@ class Board:
             if np.all(self.array[:, i] == self.array[0, i]):
                 return [(0, i), (1, i), (2, i)]
 
+    def clear_board(self):
+        self.array = np.array([['1', '2', '3'],
+                               ['4', '5', '6'],
+                               ['7', '8', '9']], dtype=object)

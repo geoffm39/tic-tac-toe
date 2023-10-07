@@ -49,7 +49,6 @@ def set_color(current_board, winning_positions: list = None):
     return current_board
 
 
-# todo: chould i add a paramater 'winner' with a default value of None? if has value (list of indices) use to format
 def format_board(current_board: np.ndarray, player1: Player, player2: Player, winning_positions: list = None) -> str:
     """
     Takes the current game board array, and both player objects to return a
@@ -74,5 +73,5 @@ def format_board(current_board: np.ndarray, player1: Player, player2: Player, wi
 
 
 def print_board(current_board: np.ndarray, player1: Player, player2: Player, winning_positions=None):
-    # clear_console()
+    clear_console()
     print(f"{format_board(current_board, player1, player2, winning_positions)}")
