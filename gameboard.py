@@ -26,20 +26,19 @@ def set_color(current_board, winning_positions: list = None):
     for x in range(len(current_board)):
         for y in range(len(current_board[x])):
             if winning_positions:
-                for position in winning_positions:
-                    if (x, y) == position:
-                        if current_board[x][y] == 'X':
-                            current_board[x][y] = f"{RED_BG}{WHITE_TEXT}{current_board[x][y]}{RESET}"
+                if (x, y) in winning_positions:
+                    if current_board[x][y] == 'X':
+                        current_board[x][y] = f"{RED_BG}{WHITE_TEXT}{current_board[x][y]}{RESET}"
 
-                        else:
-                            current_board[x][y] = f"{BLUE_BG}{WHITE_TEXT}{current_board[x][y]}{RESET}"
                     else:
-                        if current_board[x][y] == 'X':
-                            current_board[x][y] = f"{RED_TEXT}{current_board[x][y]}{RESET}"
-                        elif current_board[x][y] == 'O':
-                            current_board[x][y] = f"{BLUE_TEXT}{current_board[x][y]}{RESET}"
-                        else:
-                            current_board[x][y] = f"{DARK_GREY_TEXT}{current_board[x][y]}{RESET}"
+                        current_board[x][y] = f"{BLUE_BG}{WHITE_TEXT}{current_board[x][y]}{RESET}"
+                else:
+                    if current_board[x][y] == 'X':
+                        current_board[x][y] = f"{RED_TEXT}{current_board[x][y]}{RESET}"
+                    elif current_board[x][y] == 'O':
+                        current_board[x][y] = f"{BLUE_TEXT}{current_board[x][y]}{RESET}"
+                    else:
+                        current_board[x][y] = f"{DARK_GREY_TEXT}{current_board[x][y]}{RESET}"
             else:
                 if current_board[x][y] == 'X':
                     current_board[x][y] = f"{RED_TEXT}{current_board[x][y]}{RESET}"
