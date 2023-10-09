@@ -15,8 +15,9 @@ DARK_GREY_TEXT = "\033[40;90m"
 # set ANSI code to reset colors
 RESET = "\033[0m"
 
+
 # todo: add parameter boolean to state if winning position
-def set_color(current_board, winning_positions: list = None):
+def set_color(current_board, winning_positions: list = None) -> str:
     """
     Take the string value from an array and change the color depending on the value.
     :param val: (ndarray[str]): The string value from an array to check
@@ -59,19 +60,18 @@ def format_board(current_board: np.ndarray, player1: Player, player2: Player, wi
     :param winning_positions: (list): List of tuples representing the winning positions on the array
     :return: (str): Formatted gameboard string
     """
-    board_copy = np.copy(current_board)
-    board_copy = set_color(board_copy, winning_positions)
+    current_board = set_color(current_board, winning_positions)
     board_string = (
-        f"{board_copy[0][0]} | {board_copy[0][1]} | {board_copy[0][2]}"
+        f"{current_board[0][0]} | {current_board[0][1]} | {current_board[0][2]}"
         f"     {RED_TEXT}{player1.name}{RESET}\n"
         f"---------     Score: {player1.score}\n"
-        f"{board_copy[1][0]} | {board_copy[1][1]} | {board_copy[1][2]}\n"
+        f"{current_board[1][0]} | {current_board[1][1]} | {current_board[1][2]}\n"
         f"---------     {BLUE_TEXT}{player2.name}{RESET}\n"
-        f"{board_copy[2][0]} | {board_copy[2][1]} | {board_copy[2][2]}"
+        f"{current_board[2][0]} | {current_board[2][1]} | {current_board[2][2]}"
         f"     Score: {player2.score}\n")
     return board_string
 
 
-def print_board(current_board: np.ndarray, player1: Player, player2: Player, winning_positions=None):
+def print_board(current_board: np.ndarray, player1: Player, player2: Player, winning_positions=None) -> None:
     clear_console()
     print(f"{format_board(current_board, player1, player2, winning_positions)}")

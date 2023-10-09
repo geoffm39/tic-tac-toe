@@ -35,7 +35,7 @@ while continue_playing:
         current_player = 2
     winner = False
     while not winner:
-        print_board(board.array, player1, player2)
+        print_board(board.get_board(), player1, player2)
         print(f"Player {current_player}, it's your move!")
         choice = input("Pick an available number: ")
         choosing_position = True
@@ -49,7 +49,7 @@ while continue_playing:
                         player1.increase_score()
                     else:
                         player2.increase_score()
-                    print_board(board.array, player1, player2, winning_positions)
+                    print_board(board.get_board(), player1, player2, winning_positions)
                     print(f"Player {current_player} has won the round!")
                     while True:
                         user_input = input("Play another round? (y/n)").lower()
@@ -71,12 +71,12 @@ while continue_playing:
                             clear_console()
                             print("Invalid input. Try again.")
                 else:
-                    print_board(board.array, player1, player2)
+                    print_board(board.get_board(), player1, player2)
                     if current_player == 1:
                         current_player = 2
                     else:
                         current_player = 1
             else:
-                print_board(board.array, player1, player2)
+                print_board(board.get_board(), player1, player2)
                 print(f"Player {current_player}, that is not a valid move!")
                 choice = input("Pick an available number: ")

@@ -1,3 +1,4 @@
+import numpy
 import numpy as np
 from typing import Union
 
@@ -28,8 +29,6 @@ class Board:
         else:
             self.array[row][col] = 'O'
 
-    # def is_winner(self):
-
     def get_winning_positions(self) -> Union[list, None]:
         if self.array[0][0] == self.array[1][1] and self.array[1][1] == self.array[2][2]:
             return [(0, 0), (1, 1), (2, 2)]
@@ -45,3 +44,6 @@ class Board:
         self.array = np.array([['1', '2', '3'],
                                ['4', '5', '6'],
                                ['7', '8', '9']], dtype=object)
+
+    def get_board(self) -> numpy.ndarray:
+        return np.copy(self.array)
