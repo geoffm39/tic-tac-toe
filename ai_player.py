@@ -21,7 +21,7 @@ class AiPlayer:
         available_positions = []
         for x in range(len(self.board.array)):
             for y in range(len(self.board.array[x])):
-                if self.board.array[x][y] != 'X' or self.board.array[x][y] != 'O':
+                if self.board.array[x][y] != 'X' and self.board.array[x][y] != 'O':
                     available_positions.append((x, y))
         return available_positions
 
@@ -32,7 +32,7 @@ class AiPlayer:
             return False
 
     def minimax(self, moves: int, maximising_player: bool) -> int:
-        if self.game_over() or moves > 2:
+        if self.game_over():
             return self.evaluate_board()
 
         if maximising_player:
@@ -68,5 +68,5 @@ class AiPlayer:
             if position_eval > best_eval:
                 best_eval = position_eval
                 best_position = original_value
-
+        print(best_position)
         return best_position
