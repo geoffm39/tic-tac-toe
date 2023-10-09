@@ -10,6 +10,18 @@ class AiPlayer:
         Constructor for the AiPlayer class, initialising a board object to use for the minimax algorithm
         """
         self.board = Board()
+        self.difficulty = None
+
+    def set_difficulty(self, difficulty: int) -> None:
+        """
+        Set the difficulty level of the AI player.
+        The level value is used along with random to randomise the AI players choice to the set degree,
+        to represent a mistake in the move evaluation
+        :param difficulty: (int): number between 1 and 10 representing the number of moves the AI player steps into the
+        tree to find the best evaluation
+        :return: None
+        """
+        self.difficulty = difficulty
 
     def update_board(self, board: Board) -> None:
         """
@@ -64,7 +76,7 @@ class AiPlayer:
         best evaluation result
         :return: (int): The evaluation score of the position
         """
-        if self.game_over():
+        if self.game_over() or moves >= self.difficulty:
             return self.evaluate_board()
 
         if maximising_player:

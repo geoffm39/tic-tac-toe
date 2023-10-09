@@ -11,6 +11,10 @@ from player import Player
 from util import clear_console
 from ai_player import AiPlayer
 
+# AI difficulty levels
+EASY = 2
+MEDIUM = 4
+HARD = 10
 
 board = Board()
 ai_player = AiPlayer()
@@ -25,6 +29,21 @@ while True:  # choose 1 or 2 player
     user_input = input("1 player or 2 player game? (1/2)")
     if user_input == '1':
         player1 = Player(input("Enter first player's name: "), 1, False)
+
+        while True:  # pick AI difficulty level
+            difficulty = input("What difficulty level would you like to play? (easy/medium/hard): ").lower()
+            if difficulty == 'easy':
+                ai_player.set_difficulty(EASY)
+                break
+            elif difficulty == 'medium':
+                ai_player.set_difficulty(MEDIUM)
+                break
+            elif difficulty == 'hard':
+                ai_player.set_difficulty(HARD)
+                break
+            else:
+                clear_console()
+                print("Invalid input. Try again.")
         player2 = Player('CPU', 2, True)
         break
     elif user_input == '2':
