@@ -2,7 +2,7 @@ from board import Board
 
 
 class AiPlayer:
-    def __init__(self, player_num):
+    def __init__(self):
         self.board = Board()
 
     def update_board(self, board: Board) -> None:
@@ -32,13 +32,13 @@ class AiPlayer:
             return False
 
     def minimax(self, moves: int, maximising_player: bool) -> int:
-        if self.game_over():
+        if self.game_over() or moves > 2:
             return self.evaluate_board()
 
         if maximising_player:
             max_val = float('-inf')
             for position in self.get_available_positions():
-                original_value = self.board.array[position[0]][position[1]].copy()
+                original_value = self.board.array[position[0]][position[1]]
                 self.board.array[position[0]][position[1]] = 'O'
                 evaluation = self.minimax(moves + 1, False)
                 self.board.array[position[0]][position[1]] = original_value
@@ -47,9 +47,26 @@ class AiPlayer:
         else:
             min_val = float('inf')
             for position in self.get_available_positions():
-                original_value = self.board.array[position[0]][position[1]].copy()
+                original_value = self.board.array[position[0]][position[1]]
                 self.board.array[position[0]][position[1]] = 'X'
                 evaluation = self.minimax(moves + 1, True)
                 self.board.array[position[0]][position[1]] = original_value
                 min_val = min(min_val, evaluation)
             return min_val
+
+    def get_best_move(self, board: Board) -> object:
+        self.update_board(board)
+        best_eval = float('-inf')
+        best_position = None
+
+        for position in self.get_available_positions():
+            original_value = self.board.array[position[0]][position[1]]
+            self.board.array[position[0]][position[1]] = 'O'
+            position_eval = self.minimax(0, False)
+            self.board.array[position[0]][position[1]] = original_value
+
+            if position_eval > best_eval:
+                best_eval = position_eval
+                best_position = original_value
+
+        return best_position
