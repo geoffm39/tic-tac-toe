@@ -53,8 +53,8 @@ while continue_playing:
         else:
             board.set_position(str(ai_player.get_best_move(board)), current_player.player_num)
         if board.get_winning_positions() is not None or board.is_board_full():
+            game_over = True
             if winning_positions := board.get_winning_positions():
-                game_over = True
                 if current_player == player1:
                     player1.increase_score()
                 else:
