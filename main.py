@@ -35,8 +35,8 @@ while continue_playing:
         current_player = player1
     else:
         current_player = player2
-    winner = False
-    while not winner:
+    game_over = False
+    while not game_over:
         if not current_player.is_cpu:
             print_board(board.get_board(), player1, player2)
             print(f"Player {current_player.player_num}, it's your move!")
@@ -52,15 +52,18 @@ while continue_playing:
                     choice = input("Pick an available number: ")
         else:
             board.set_position(str(ai_player.get_best_move(board)), current_player.player_num)
-
-        if winning_positions := board.get_winning_positions():
-            winner = True
-            if current_player == 1:
-                player1.increase_score()
+        if board.get_winning_positions() is not None or board.is_board_full():
+            if winning_positions := board.get_winning_positions():
+                game_over = True
+                if current_player == player1:
+                    player1.increase_score()
+                else:
+                    player2.increase_score()
+                print_board(board.get_board(), player1, player2, winning_positions)
+                print(f"Player {current_player.player_num} has won the round!")
             else:
-                player2.increase_score()
-            print_board(board.get_board(), player1, player2, winning_positions)
-            print(f"Player {current_player.player_num} has won the round!")
+                print_board(board.get_board(), player1, player2)
+                print("The round is a draw!")
             while True:
                 user_input = input("Play another round? (y/n)").lower()
                 if user_input == 'y':
@@ -68,11 +71,11 @@ while continue_playing:
                     break
                 elif user_input == 'n':
                     clear_console()
-                    print(f"Final Scores:\nPlayer 1: {player1.score}\nPlayer 2: {player2.score}")
+                    print(f"Final Scores:\n{player1.name}: {player1.score}\n{player2.name}: {player2.score}")
                     if player1.score > player2.score:
-                        print("Player 1 Wins!")
+                        print(f"{player1.name} Wins!")
                     elif player1.score < player2.score:
-                        print("Player 2 Wins!")
+                        print(f"{player2.name} Wins!")
                     else:
                         print("It was a draw!")
                     continue_playing = False

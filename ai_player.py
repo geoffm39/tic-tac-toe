@@ -68,5 +68,4 @@ class AiPlayer:
             if position_eval > best_eval:
                 best_eval = position_eval
                 best_position = original_value
-        print(best_position)
         return best_position
