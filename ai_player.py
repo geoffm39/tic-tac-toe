@@ -97,7 +97,7 @@ class AiPlayer:
         best_position = None
 
         if len(self.get_available_positions()) == 9:
-            return '5'
+            return '1'
         else:
             for position in self.get_available_positions():
                 original_value = self.board.array[position[0]][position[1]]
