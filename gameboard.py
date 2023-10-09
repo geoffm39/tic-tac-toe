@@ -1,3 +1,7 @@
+"""
+The gameboard module is used to format the gameboard state and scores for the console output.
+"""
+
 import numpy as np
 from player import Player
 from util import clear_console
@@ -17,11 +21,13 @@ RESET = "\033[0m"
 
 
 # todo: add parameter boolean to state if winning position
-def set_color(current_board, winning_positions: list = None) -> str:
+def set_color(current_board: np.ndarray, winning_positions: list = None) -> np.ndarray:
     """
-    Take the string value from an array and change the color depending on the value.
-    :param val: (ndarray[str]): The string value from an array to check
-    :return: (str) Colored string
+    Take the current board and format the values to the appropriate color text and background.
+    :param current_board: (ndarray): The array of the current board state
+    :param winning_positions: (list): A list of tuples representing the winning position
+    indices of the array. Default is None
+    :return: (str): The array with the formatted string objects
     """
     current_board = current_board
     for x in range(len(current_board)):
@@ -30,7 +36,6 @@ def set_color(current_board, winning_positions: list = None) -> str:
                 if (x, y) in winning_positions:
                     if current_board[x][y] == 'X':
                         current_board[x][y] = f"{RED_BG}{WHITE_TEXT}{current_board[x][y]}{RESET}"
-
                     else:
                         current_board[x][y] = f"{BLUE_BG}{WHITE_TEXT}{current_board[x][y]}{RESET}"
                 else:
@@ -53,7 +58,7 @@ def set_color(current_board, winning_positions: list = None) -> str:
 def format_board(current_board: np.ndarray, player1: Player, player2: Player, winning_positions: list = None) -> str:
     """
     Takes the current game board array, and both player objects to return a
-    formatted string to be used as the gameboard output.
+    formatted string to be used as the gameboard output using ANSI colors.
     :param current_board: (ndarray): The current board array to use for creating the string
     :param player1: (Player): Player object to set to player X
     :param player2: (Player): Player object to set to player O
@@ -73,5 +78,13 @@ def format_board(current_board: np.ndarray, player1: Player, player2: Player, wi
 
 
 def print_board(current_board: np.ndarray, player1: Player, player2: Player, winning_positions=None) -> None:
+    """
+    Clear the console then print the formatted gameboard along with scores
+    :param current_board: (ndarray): array of current board state
+    :param player1: (Player): player 1 object
+    :param player2: (Player): payer 2 object
+    :param winning_positions: (list): List of tuples representing the winning positions on the array
+    :return:
+    """
     clear_console()
     print(f"{format_board(current_board, player1, player2, winning_positions)}")

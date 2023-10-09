@@ -37,7 +37,7 @@ while continue_playing:
         current_player = player2
     game_over = False
     while not game_over:
-        if not current_player.is_cpu:
+        if not current_player.is_computer:
             print_board(board.get_board(), player1, player2)
             print(f"Player {current_player.player_num}, it's your move!")
             choice = input("Pick an available number: ")

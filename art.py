@@ -1,3 +1,7 @@
+"""
+The art module holds the code for the formatted logo at the start of the game.
+"""
+
 from util import clear_console
 
 RED_TEXT = "\033[91m"
@@ -5,7 +9,11 @@ BLUE_TEXT = "\033[94m"
 RESET = "\033[0m"
 
 
-def logo():
+def logo() -> None:
+    """
+    Clear the console and print the color formatted ASCII logo
+    :return: None
+    """
     clear_console()
     print(f"""
 {RED_TEXT} ______  ____    __ {RESET}      {BLUE_TEXT} ______   ____    __ {RESET}      {RED_TEXT} ______   ___     ___ {RESET}

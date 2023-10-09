@@ -1,15 +1,26 @@
-import numpy
 import numpy as np
 from typing import Union
 
 
 class Board:
+    """
+    Board class represents the gameboard, controlling its state and providing values to other classes and modules.
+    """
     def __init__(self):
+        """
+        Constructor for the Board class, assigning the starting numpy array for the board object.
+        """
         self.array = np.array([['1', '2', '3'],
                                ['4', '5', '6'],
                                ['7', '8', '9']], dtype=object)
 
     def get_position(self, position_num: str) -> Union[tuple, None]:
+        """
+        Takes a string value to find the index of that value in the array.
+        :param position_num: (str): value of the array position
+        :return: (tuple, None): returns the index values of the poistion as a tuple, or None if no
+         position exists with that value
+        """
         row, col = np.where(self.array == position_num)
         if len(row) > 0:
             return row[0], col[0]
@@ -17,12 +28,23 @@ class Board:
             return None
 
     def is_position(self, position_num: str) -> bool:
+        """
+        Checks if the value is in the gameboard array.
+        :param position_num: (str): the value to check
+        :return: (bool): True if the value is in the array
+        """
         if self.get_position(position_num):
             return True
         else:
             return False
 
     def set_position(self, position_num: str, player_num: int) -> None:
+        """
+        Sets the position in the array with the value to the chosen player.
+        :param position_num: (str):
+        :param player_num:
+        :return:
+        """
         row, col = self.get_position(position_num)
         if player_num == 1:
             self.array[row][col] = 'X'
@@ -47,10 +69,10 @@ class Board:
                     return False
         return True
 
-    def clear_board(self):
+    def clear_board(self) -> None:
         self.array = np.array([['1', '2', '3'],
                                ['4', '5', '6'],
                                ['7', '8', '9']], dtype=object)
 
-    def get_board(self) -> numpy.ndarray:
+    def get_board(self) -> np.ndarray:
         return np.copy(self.array)
