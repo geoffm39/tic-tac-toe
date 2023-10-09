@@ -1,3 +1,7 @@
+"""
+Main script for running the game
+"""
+
 import random
 
 from art import logo
@@ -16,7 +20,8 @@ logo()
 print("Welcome to Tic-Tac-Toe!")
 print("Player 1 is 'X' and Player 2 is 'O'.")
 print("The starting player is random!")
-while True:
+
+while True:  # choose 1 or 2 player
     user_input = input("1 player or 2 player game? (1/2)")
     if user_input == '1':
         player1 = Player(input("Enter first player's name: "), 1, False)
@@ -29,19 +34,22 @@ while True:
     else:
         clear_console()
         print("Invalid input. Try again.")
+
 continue_playing = True
-while continue_playing:
-    if random.randint(1, 2) == 1:
+while continue_playing:  # game loop
+    if random.randint(1, 2) == 1:  # select a random player to start
         current_player = player1
     else:
         current_player = player2
+
     game_over = False
-    while not game_over:
-        if not current_player.is_computer:
+    while not game_over:  # match loop
+        if not current_player.is_computer:  # human player move
             print_board(board.get_board(), player1, player2)
             print(f"Player {current_player.player_num}, it's your move!")
             choice = input("Pick an available number: ")
             choosing_position = True
+
             while choosing_position:
                 if board.is_position(choice):
                     choosing_position = False
@@ -50,9 +58,10 @@ while continue_playing:
                     print_board(board.get_board(), player1, player2)
                     print(f"Player {current_player.player_num}, that is not a valid move!")
                     choice = input("Pick an available number: ")
-        else:
+        else:  # AI player move
             board.set_position(str(ai_player.get_best_move(board)), current_player.player_num)
-        if board.get_winning_positions() is not None or board.is_board_full():
+
+        if board.get_winning_positions() is not None or board.is_board_full():  # if match over
             game_over = True
             if winning_positions := board.get_winning_positions():
                 if current_player == player1:
@@ -64,6 +73,7 @@ while continue_playing:
             else:
                 print_board(board.get_board(), player1, player2)
                 print("The round is a draw!")
+
             while True:
                 user_input = input("Play another round? (y/n)").lower()
                 if user_input == 'y':

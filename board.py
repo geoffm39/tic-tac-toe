@@ -41,9 +41,9 @@ class Board:
     def set_position(self, position_num: str, player_num: int) -> None:
         """
         Sets the position in the array with the value to the chosen player.
-        :param position_num: (str):
-        :param player_num:
-        :return:
+        :param position_num: (str): the value to change
+        :param player_num: (int): player number of current player
+        :return: None
         """
         row, col = self.get_position(position_num)
         if player_num == 1:
@@ -52,6 +52,11 @@ class Board:
             self.array[row][col] = 'O'
 
     def get_winning_positions(self) -> Union[list, None]:
+        """
+        Check for any winning board states, returning an array of the winning positions
+        :return: returns a list of tuples representing the indices of the winning positions, or None if no
+        winning positions
+        """
         if self.array[0][0] == self.array[1][1] and self.array[1][1] == self.array[2][2]:
             return [(0, 0), (1, 1), (2, 2)]
         if self.array[2, 0] == self.array[1][1] and self.array[1][1] == self.array[0, 2]:
@@ -63,6 +68,10 @@ class Board:
                 return [(0, i), (1, i), (2, i)]
 
     def is_board_full(self) -> bool:
+        """
+        Check if there are any more moves on the gameboard
+        :return: (bool): returns True if more moves
+        """
         for x in range(len(self.array)):
             for y in range(len(self.array[x])):
                 if self.array[x][y] != 'X' and self.array[x][y] != 'O':
@@ -70,9 +79,17 @@ class Board:
         return True
 
     def clear_board(self) -> None:
+        """
+        Reset the board to the original state for a new game
+        :return: None
+        """
         self.array = np.array([['1', '2', '3'],
                                ['4', '5', '6'],
                                ['7', '8', '9']], dtype=object)
 
     def get_board(self) -> np.ndarray:
+        """
+        Copy the array of the current board state
+        :return: (ndarray): a copy of the gameboard array
+        """
         return np.copy(self.array)
